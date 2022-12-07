@@ -6,10 +6,14 @@ import com.springbootblog.springbootrestapi.service.PostService;
 import com.springbootblog.springbootrestapi.utils.AppConstants;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Builder
@@ -22,7 +26,7 @@ public class PostController {
 
     // CREATE A BLOG
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto newPostDto){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto newPostDto){
         return  new ResponseEntity<>(postService.createPosts(newPostDto), HttpStatus.CREATED);
     }
 
@@ -42,7 +46,7 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePosts(@PathVariable(name ="id") Long id, @RequestBody PostDto newPost){
+    public ResponseEntity<PostDto> updatePosts(@Valid @PathVariable(name ="id") Long id, @RequestBody PostDto newPost){
         PostDto postResponse = postService.updatePosts(newPost,id);
         return  new ResponseEntity<>(postResponse,HttpStatus.OK);
     }
@@ -52,4 +56,6 @@ public class PostController {
         postService.deletePostById(id);
         return new ResponseEntity<>("Post entity deleted successfully" , HttpStatus.OK);
     }
+
+
 }
