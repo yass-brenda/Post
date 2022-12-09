@@ -17,8 +17,11 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("/posts/{PostId}/comments")
-    public ResponseEntity<CommentDto> guardarComentario(@Valid  @PathVariable(name = "PostId") Long postId, @RequestBody CommentDto commentDto){
+    public ResponseEntity<CommentDto> guardarComentario(@Valid @PathVariable(name = "PostId") Long postId, @RequestBody CommentDto commentDto){
         return new ResponseEntity<>(commentService.save(postId,commentDto), HttpStatus.CREATED);
     }
-
+    @GetMapping("/posts/{postId}/comments")
+    public List<CommentDto>getCommentByPostId(@PathVariable(value = "postId")Long postId){
+       return commentService.getCommentByPostId(postId);
+    }
 }

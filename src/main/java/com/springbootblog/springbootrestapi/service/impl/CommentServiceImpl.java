@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -35,7 +36,11 @@ public class CommentServiceImpl implements CommentService {
         return commentToDTo(newComment);
     }
 
-
+    @Override
+    public List<CommentDto> getCommentByPostId(Long postId) {
+       List<Comment>comments = commentRepository.findByPostId(postId);
+       return comments.stream().map(comment -> commentToDTo(comment)).collect(Collectors.toList());
+    }
 
 
 
