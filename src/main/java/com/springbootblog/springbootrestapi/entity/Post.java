@@ -28,9 +28,7 @@ public class Post{
     @Column(name = "content", nullable = false)
     private String content;
 
-    /*@OneToMany(mappedBy = "post",cascade =  CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
-    private List<Comment> comments;*/
+    @OneToMany(mappedBy = "post",cascade =  CascadeType.ALL,orphanRemoval = true,fetch = FetchType.LAZY)
+    private Set<Comment> comments = new HashSet<>();
 
-
-    // Set no acepta comentarios duplicados
 }
