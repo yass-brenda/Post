@@ -8,5 +8,8 @@ import java.util.List;
 public interface CommentService {
     CommentDto save(Long postId, CommentDto commentDto);
     List<CommentDto> getCommentByPostId(Long postId);
+    CommentDto getCommentById(Long postId, Long commentId);
+
+    CommentDto updatedComment(Long postId,Long commentId, CommentDto commentDto);
 
 }
