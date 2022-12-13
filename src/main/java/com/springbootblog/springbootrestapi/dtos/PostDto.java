@@ -17,8 +17,7 @@ import java.util.Set;
 public class PostDto {
     @Nullable
     private Long id;
-    // no vacio
-    // Mas de 2 caracteres
+
     @NotEmpty(message = "No puede ser nulo o vacio")
     @Size(min = 2, message = "El titulo debe ser mayor a 2 carcteres")
     private String tittle;

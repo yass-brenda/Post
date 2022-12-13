@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
@@ -16,13 +18,17 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name ="title" )
+    @Column(name ="title", nullable = false )
+    @NotEmpty(message = "No debe ser vacio")
+    @Size(min= 4, message = "El titulo debe tener màs de 4 caràcteres")
     private String title;
 
-    @Column(name ="email")
+    @Column(name ="email", nullable = false)
     private String email;
 
-    @Column(name ="body")
+    @NotEmpty(message = "No debe ser vacio")
+    @Column(name ="body", nullable = false)
+    @Size(min= 4, message = "El titulo debe tener màs de 4 caràcteres")
     private String body;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,6 +1,8 @@
 package com.springbootblog.springbootrestapi.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -11,10 +13,13 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentDto {
 
 
     private Long id;
+
     @NotEmpty(message = "El titulo del comentario no puedes ser nulo o vacio")
     private String title;
 

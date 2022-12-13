@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Validated
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
@@ -68,6 +70,16 @@ public class CommentServiceImpl implements CommentService {
         comment.setBody(commentDto.getBody());
         Comment updatedComment = commentRepository.save(comment);
         return commentToDTo(updatedComment) ;
+    }
+
+    @Override
+    public void deleteCommentById(Long postId,Long commentId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new ResourceNotFoundException("Post","id",postId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(()-> new ResourceNotFoundException("Comment","id",commentId));
+        if(!comment.getPost().getId().equals(post.getId())){
+            throw new BlogApiException(HttpStatus.BAD_REQUEST,"Comment does not belong to post");
+        }
+        commentRepository.delete(comment);
     }
 
 
