@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class PostController {
 
     // CREATE A BLOG
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto newPostDto){
         return  new ResponseEntity<>(postService.createPosts(newPostDto), HttpStatus.CREATED);
     }
@@ -44,12 +46,13 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostsById(id));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<PostDto> updatePosts(@Valid @PathVariable(name ="id") Long id, @RequestBody PostDto newPost){
         PostDto postResponse = postService.updatePosts(newPost,id);
         return  new ResponseEntity<>(postResponse,HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePosts(@PathVariable(name ="id") Long id){
         postService.deletePostById(id);
