@@ -24,9 +24,8 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    // CREATE A BLOG
+    @PreAuthorize("hasRole('ADMIN')") // CREATE A BLOG
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto newPostDto){
         return  new ResponseEntity<>(postService.createPosts(newPostDto), HttpStatus.CREATED);
     }
