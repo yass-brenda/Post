@@ -35,7 +35,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET,"/api/**").permitAll().anyRequest().authenticated().and().httpBasic();
+        http.csrf().disable()
+                .authorizeRequests().
+                antMatchers(HttpMethod.GET,"/api/**")
+                .permitAll()
+                .antMatchers("/api/auth/**").permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
     }
 
     @Override
@@ -44,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
@@ -53,7 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected UserDetailsService userDetailsService(){
        UserDetails brenda = User.builder().username("Brenda").password(passwordEncoder().encode("Brenda")).roles("USER").build();
-       UserDetails ulisses = User.builder().username("Ulisses").password(passwordEncoder().encode("Ulisses")).roles("ADMIN").build();
+       UserDetails ulisses = Use
+    @Override
+    @Bean
+    public Authr.builder().username("Ulisses").password(passwordEncoder().encode("Ulisses")).roles("ADMIN").build();
        return  new InMemoryUserDetailsManager(brenda,ulisses);
     }*/
 
